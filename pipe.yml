@@ -1,0 +1,16 @@
+name: Stylized Slack Notification
+image: raphacps/smart-slack-notification-pipe:0.0.1
+variables:
+  - name: PROJECT_NAME
+  - name: TEAM_NAME
+  - name: ENVIRONMENT
+  - name: CHANGELOG
+    default: ‘false’
+  - name: SLACK_HOOK_URL
+description: This pipe is a smart slack notification for Bitbucket Pipelines.
+repository: 
+maintainer: raphacps@gmail.com
+tags:
+    - bitbucket-pipelines
+    - pipes
+    - slack
