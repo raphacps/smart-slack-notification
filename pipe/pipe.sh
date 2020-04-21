@@ -42,7 +42,7 @@ configure_success_failure_deployment_variables() {
     DEPLOYMENT_FEEDBACK="completed *successfully!*"
     ICON_DEPLOYMENT_FEEDBACK="'accessory': {
                                 'type': 'image',
-                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/feature/alterar-layout/tick_ok_image.png',
+                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/feature/alterar-layout/success_tick.png',
                                 'alt_text': 'Succeeded deployment'
                               }"
   else
