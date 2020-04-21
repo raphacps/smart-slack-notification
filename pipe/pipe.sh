@@ -42,22 +42,6 @@ notify_slack() {
               'blocks': [
                     {
                       'type': 'section',
-                      'fields': [
-                          {
-                              'type': 'mrkdwn',
-                              'text': '*Project:*\n*<https://bitbucket.org/account/user/$BITBUCKET_WORKSPACE/projects/$BITBUCKET_PROJECT_KEY|$PROJECT_NAME>*'
-                          },
-                          {
-                              'type': 'mrkdwn',
-                              'text': '*Team:*\n$TEAM_NAME'
-                          }
-                      ]
-                    },
-                    {
-                        'type': 'divider'
-                    },
-                    {
-                      'type': 'section',
                       'text': {
                         'type': 'mrkdwn',
                         'text': '*Deploy Notification*'
@@ -74,12 +58,28 @@ notify_slack() {
                       },
                       'accessory': {
                         'type': 'image',
-                        'image_url': 'https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png',
+                        'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/feature/alterar-layout/ok_tick.png',
                         'alt_text': 'Succeeded Deployment'
                       }
                     },
                     {
                       'type': 'divider'
+                    },
+                    {
+                      'type': 'section',
+                      'fields': [
+                          {
+                              'type': 'mrkdwn',
+                              'text': '*Project:*\n*<https://bitbucket.org/account/user/$BITBUCKET_WORKSPACE/projects/$BITBUCKET_PROJECT_KEY|$PROJECT_NAME>*'
+                          },
+                          {
+                              'type': 'mrkdwn',
+                              'text': '*Team:*\n$TEAM_NAME'
+                          }
+                      ]
+                    },
+                    {
+                        'type': 'divider'
                     },
                     {
                       'type': 'context',
