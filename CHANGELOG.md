@@ -1,7 +1,15 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
-## 1.0.0
+# 1.1.0
 
-- Added: Initial release
+### Added
+* Novo layout mais expressivo
+* feedback de deploys com falha
+* docker-compose para facilitar build e testes
+
+# 1.0.0
+
+### Added
+* Initial release
 

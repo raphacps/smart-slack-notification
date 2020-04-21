@@ -36,6 +36,26 @@ enable_changelog() {
   CHANGELOG_PAYLOAD="Changelog: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH/CHANGELOG.md|CHANGELOG.md>*"
 }
 
+configure_success_failure_deployment_variables() {
+  echo "Pipeline exit code: $BITBUCKET_EXIT_CODE"
+  if [ "$BITBUCKET_EXIT_CODE" == "0" ]; then
+    DEPLOYMENT_FEEDBACK="completed *successfully!*"
+    ICON_DEPLOYMENT_FEEDBACK="'accessory': {
+                                'type': 'image',
+                                'image_url': 'https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png',
+                                'alt_text': 'Succeeded deployment'
+                              }"
+  else
+    DEPLOYMENT_FEEDBACK="ended with *failure...*"
+    ICON_DEPLOYMENT_FEEDBACK="'accessory': {
+                                'type': 'image',
+                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/feature/alterar-layout/failure_tick.png',
+                                'alt_text': 'Failure deployment'
+                              }"
+  fi
+  echo "Pipeline exit code: $BITBUCKET_EXIT_CODE"
+}
+
 notify_slack() {
   echo "Notifying slack to webhook $1"
   curl -X POST -H 'Content-type: application/json' --data "{
@@ -44,7 +64,7 @@ notify_slack() {
                       'type': 'section',
                       'text': {
                         'type': 'mrkdwn',
-                        'text': '*Deploy Notification*'
+                        'text': '*Deploy Notification*\n*Team:* $TEAM_NAME\t\t\t *Project:* <https://bitbucket.org/account/user/$BITBUCKET_WORKSPACE/projects/$BITBUCKET_PROJECT_KEY|$PROJECT_NAME>'
                       }
                     },
                     {
@@ -54,39 +74,20 @@ notify_slack() {
                       'type': 'section',
                       'text': {
                         'type': 'mrkdwn',
-                        'text': 'Deployment of service *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH|$BITBUCKET_REPO_SLUG>* on *$ENVIRONMENT* completed *successfully!*\nBuild Number: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER|#$BITBUCKET_BUILD_NUMBER>*\n$VERSION_INFO\n$CHANGELOG_PAYLOAD'
+                        'text': 'Deployment of service *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH|$BITBUCKET_REPO_SLUG>* on *$BITBUCKET_DEPLOYMENT_ENVIRONMENT* $DEPLOYMENT_FEEDBACK\nBuild Number: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER|#$BITBUCKET_BUILD_NUMBER>*\n$VERSION_INFO\n$CHANGELOG_PAYLOAD'
                       },
-                      'accessory': {
-                        'type': 'image',
-                        'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/feature/alterar-layout/ok_tick.png',
-                        'alt_text': 'Succeeded Deployment'
-                      }
+                      $ICON_DEPLOYMENT_FEEDBACK
                     },
                     {
                       'type': 'divider'
                     },
-                    {
-                      'type': 'section',
-                      'fields': [
-                          {
-                              'type': 'mrkdwn',
-                              'text': '*Project:*\n*<https://bitbucket.org/account/user/$BITBUCKET_WORKSPACE/projects/$BITBUCKET_PROJECT_KEY|$PROJECT_NAME>*'
-                          },
-                          {
-                              'type': 'mrkdwn',
-                              'text': '*Team:*\n$TEAM_NAME'
-                          }
-                      ]
-                    },
-                    {
-                        'type': 'divider'
-                    },
+
                     {
                       'type': 'context',
                       'elements': [
                         {
                           'type': 'mrkdwn',
-                          'text': '*><https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe|smart-slack-notification 1.0.0>*'
+                          'text': '*><https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe|smart-slack-notification 1.1.0>*'
                         }
                       ]
                     }
@@ -114,6 +115,8 @@ fi
 if [ "$CHANGELOG" == true ]; then
   enable_changelog
 fi
+
+configure_success_failure_deployment_variables
 
 notify_slack_list
 ###end program

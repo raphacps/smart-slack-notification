@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   slackNotification:
-    image: smart-slack-notification-pipe:1.0.0
+    image: raphacps/smart-slack-notification-pipe:1.1.0
     build: .
     environment:
       PROJECT_NAME: My Awesome Project
@@ -9,5 +9,7 @@ services:
       SLACK_HOOK_URL: "https://hooks.slack.com/services/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"
       VERSION: 1.0.0
       CHANGELOG: "true"
+      BITBUCKET_EXIT_CODE: 1
       BITBUCKET_REPO_SLUG: awesome-service
       BITBUCKET_BUILD_NUMBER: 235
+      BITBUCKET_DEPLOYMENT_ENVIRONMENT: Develop

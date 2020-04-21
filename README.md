@@ -3,20 +3,29 @@
 Notifications to slack for bitbucket pipelines. It's possible send notifications to many webhooks simultaneously.
 Observe the complete result below:
 
-![notification](notification-example.png)
+### Success Notification Example
+
+![success_notification](success_notification.png)
+
+### Failure Notification Example
+
+![failure_notification](failure_notification.png)
 
 where:
 
-* **Project**: Project name definided in `PROJECT_NAME` variable. *The project link is definided automatically.*
 * **Team**: Team name definided in `TEAM_NAME` variable
+* **Project**: Project name definided in `PROJECT_NAME` variable. *The project link is definided automatically.*
 * **Service**: Service name. *Definided automatically by repository name.*
-* **Environment**: Definided by branch name according rules below:
-    * `master`: "production"
-    * `staging` or `stage`: "staging"
-    * `other branch names`: "develop"
+* **Deployment Environment**: Definided by [bitbucket deployments](https://confluence.atlassian.com/bitbucket/bitbucket-deployments-940695276.html) configuration
+* **Build Number**: Link to a Bitbucket Pipeline Build Number.
 * **Version**: Tag version. *The project link is definided automatically*
 * **CHANGELOG**: Link to the `CHANGELOG` file in your project.
-* **Build Number**: Link to a Bitbucket Pipeline Build Number.
+
+### How does Smart Slack Notification Discover a Deployment With Failure?
+
+Based in bitbucket pipelines [`after-script`](https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html?_ga=2.70482000.175567917.1587490062-62368228.1564429862#Configurebitbucket-pipelines.yml-ci_pull-requests) statement. 
+
+`after-script` - Commands inside an after-script section will run when the step succeeds or fails. Then the `BITBUCKET_EXIT_CODE` environment is used to choose between success (`BITBUCKET_EXIT_CODE=0`) or failure (`BITBUCKET_EXIT_CODE=1`) notification.  
 
 ## YAML Definition
 
@@ -24,7 +33,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.0.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
     variables:
       TEAM_NAME: "<string>"
       PROJECT_NAME: "<string>"
@@ -39,7 +48,7 @@ script:
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.0.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
     variables:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
@@ -48,12 +57,23 @@ script:
       CHANGELOG: "true"
       VERSION: "1.0.0"
 ```
+#### Multiple Webhook Version
 
+```yaml
+script:
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
+    variables:
+      TEAM_NAME: "My Project"
+      PROJECT_NAME: "My Awesome Team"
+      SLACK_HOOK_URL: "https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa,https://hooks.slack.com/services/8888888/88888888/bbbbbbbbbbbbbbbbbbb" # <Array example>
+      CHANGELOG: "true"
+      VERSION: "1.0.0"
+```
 #### Short Version
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.0.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
     variables:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
@@ -72,39 +92,10 @@ script:
 
 _(*) = required variable._
 
-## Running Locally
+### Running Locally
 To run locally execute the code below:
 
-##### Complete Version with one webhook:
-```
-  docker run \
-       -e PROJECT_NAME="My Project" \
-       -e TEAM_NAME="My Awesome Team" \
-       -e SLACK_HOOK_URL="https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa" \
-       -e VERSION="1.0.0" \
-       -e CHANGELOG="true" \
-       raphacps/smart-slack-notification-pipe:1.0.0    
-```
-
-##### Simultaneous slack webhook Notifications:
-```
-  docker run \
-       -e PROJECT_NAME="My Project" \
-       -e TEAM_NAME="My Awesome Team" \
-       -e SLACK_HOOK_URL="https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa,https://hooks.slack.com/services/8888888/88888888/bbbbbbbbbbbbbbbbbbb" \
-       -e VERSION="1.0.0" \
-       -e CHANGELOG="true" \
-       raphacps/smart-slack-notification-pipe:1.0.0    
-```
-
-##### Short version:
-```
-  docker run \
-     -e PROJECT_NAME="My Project" \
-     -e TEAM_NAME="My Awesome Team" \
-     -e SLACK_HOOK_URL="https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa" \
-     raphacps/smart-slack-notification-pipe:1.0.0    
-```
+`docker-compose build && docker-compose up`
 
 ## Generating a new version
 
@@ -112,6 +103,7 @@ To run locally execute the code below:
    
    - [x] Test your changes
    - [x] Bump to the new [version](https://semver.org/) in the [changelog](https://keepachangelog.com/en/1.0.0/). 
+   - [x] Bump to the new in the [docker-compose.yml](docker-compose.yml) file.
    - [x] Open a Pull Request with a description of your changes
 
 > Docker Repository https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe
