@@ -21,7 +21,7 @@ where:
 * **Version**: Tag version. *The project link is definided automatically*
 * **CHANGELOG**: Link to the `CHANGELOG` file in your project.
 
-### How does Smart Slack Notification Discover a Deployment With Failure?
+### How Does Smart Slack Notification Discover a Deployment With Failure?
 
 Based in bitbucket pipelines [`after-script`](https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html?_ga=2.70482000.175567917.1587490062-62368228.1564429862#Configurebitbucket-pipelines.yml-ci_pull-requests) statement. 
 
@@ -53,7 +53,6 @@ script:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
       SLACK_HOOK_URL: "https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa"
-      # SLACK_HOOK_URL: "https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa,https://hooks.slack.com/services/8888888/88888888/bbbbbbbbbbbbbbbbbbb" # <Array example>
       CHANGELOG: "true"
       VERSION: "1.0.0"
 ```
@@ -65,7 +64,7 @@ script:
     variables:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
-      SLACK_HOOK_URL: "https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa,https://hooks.slack.com/services/8888888/88888888/bbbbbbbbbbbbbbbbbbb" # <Array example>
+      SLACK_HOOK_URL: "https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa,https://hooks.slack.com/services/8888888/88888888/bbbbbbbbbbbbbbbbbbb"
       CHANGELOG: "true"
       VERSION: "1.0.0"
 ```
@@ -95,7 +94,8 @@ _(*) = required variable._
 ### Running Locally
 To run locally execute the code below:
 
-`docker-compose build && docker-compose up`
+1. Configure a webhook to `SLACK_HOOK_URL` environment in [docker-compose.yml](docker-compose.yml)
+1. `make run`
 
 ## Generating a new version
 
