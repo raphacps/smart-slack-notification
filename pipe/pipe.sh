@@ -27,19 +27,13 @@ discover_environment() {
 
 configure_version() {
   echo "Tag version: $VERSION"
-  VERSION_INFO="{
-                      'type': 'mrkdwn',
-                      'text': '*Version:*\n*<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$VERSION|$VERSION>*'
-                  },"
+  VERSION_INFO="Version: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$VERSION|$VERSION>*"
 }
 
 enable_changelog() {
-  echo "CHANGELOG enabled..."
+  echo "CHANGELOG enabled=$CHANGELOG"
   echo "Link to CHANGELOG: https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH/CHANGELOG.md"
-  CHANGELOG_PAYLOAD="{
-                        'type': 'mrkdwn',
-                        'text': '*Changelog:*\n*<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH/CHANGELOG.md|CHANGELOG.md>*'
-                    },"
+  CHANGELOG_PAYLOAD="Changelog: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH/CHANGELOG.md|CHANGELOG.md>*"
 }
 
 notify_slack() {
@@ -63,33 +57,36 @@ notify_slack() {
                         'type': 'divider'
                     },
                     {
-                        'type': 'section',
-                        'fields': [
-                            {
-                                'type': 'mrkdwn',
-                                'text': '*Service:*\n$BITBUCKET_REPO_SLUG'
-                            },
-                            {
-                                'type': 'mrkdwn',
-                                'text': '*Environment:*\n$ENVIRONMENT'
-                            },
-                            $VERSION_INFO
-                            $CHANGELOG_PAYLOAD
-                            {
-                                'type': 'mrkdwn',
-                                'text': '*Build Number:*\n*<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER|#$BITBUCKET_BUILD_NUMBER>*'
-                            }
-                       ]
+                      'type': 'section',
+                      'text': {
+                        'type': 'mrkdwn',
+                        'text': '*Deploy Notification*'
+                      }
                     },
                     {
                       'type': 'divider'
                     },
                     {
                       'type': 'section',
-                      'fields': [
+                      'text': {
+                        'type': 'mrkdwn',
+                        'text': 'Deployment of service *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH|$BITBUCKET_REPO_SLUG>* on *$ENVIRONMENT* completed *successfully!*\nBuild Number: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER|#$BITBUCKET_BUILD_NUMBER>*\n$VERSION_INFO\n$CHANGELOG_PAYLOAD'
+                      },
+                      'accessory': {
+                        'type': 'image',
+                        'image_url': 'https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png',
+                        'alt_text': 'Succeeded Deployment'
+                      }
+                    },
+                    {
+                      'type': 'divider'
+                    },
+                    {
+                      'type': 'context',
+                      'elements': [
                         {
                           'type': 'mrkdwn',
-                          'text': '><https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe|smart-slack-notification 1.0.0>'
+                          'text': '*><https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe|smart-slack-notification 1.0.0>*'
                         }
                       ]
                     }
