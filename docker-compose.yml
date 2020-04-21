@@ -6,10 +6,10 @@ services:
     environment:
       PROJECT_NAME: My Awesome Project
       TEAM_NAME: My Awesome Team
-      SLACK_HOOK_URL: "https://hooks.slack.com/services/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"
+      SLACK_HOOK_URL: "https://hooks.slack.com/services/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"
       VERSION: 1.0.0
       CHANGELOG: "true"
-      BITBUCKET_EXIT_CODE: 1
+      BITBUCKET_EXIT_CODE: 0
       BITBUCKET_REPO_SLUG: awesome-service
       BITBUCKET_BUILD_NUMBER: 235
       BITBUCKET_DEPLOYMENT_ENVIRONMENT: Develop
