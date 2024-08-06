@@ -42,14 +42,14 @@ configure_success_failure_deployment_variables() {
     DEPLOYMENT_FEEDBACK="completed *successfully!*"
     ICON_DEPLOYMENT_FEEDBACK="'accessory': {
                                 'type': 'image',
-                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/1.1.0/success_tick_ok.png',
+                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/1.1.1/success_tick_ok.png',
                                 'alt_text': 'Succeeded deployment'
                               }"
   else
     DEPLOYMENT_FEEDBACK="ended with *failure...*"
     ICON_DEPLOYMENT_FEEDBACK="'accessory': {
                                 'type': 'image',
-                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/1.1.0/failure_tick.png',
+                                'image_url': 'https://raw.githubusercontent.com/raphacps/smart-slack-notification/1.1.1/failure_tick.png',
                                 'alt_text': 'Failure deployment'
                               }"
   fi
@@ -64,7 +64,7 @@ notify_slack() {
                       'type': 'section',
                       'text': {
                         'type': 'mrkdwn',
-                        'text': '*Deploy Notification*\n*Team:* $TEAM_NAME\t\t\t *Project:* <https://bitbucket.org/account/user/$BITBUCKET_WORKSPACE/projects/$BITBUCKET_PROJECT_KEY|$PROJECT_NAME>'
+                        'text': '*Deploy Notification*\n*Team:* $TEAM_NAME\t\t\t *Project:* <https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG|$PROJECT_NAME>'
                       }
                     },
                     {
@@ -74,7 +74,7 @@ notify_slack() {
                       'type': 'section',
                       'text': {
                         'type': 'mrkdwn',
-                        'text': 'Deployment of service *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/src/$BITBUCKET_BRANCH|$BITBUCKET_REPO_SLUG>* on *$BITBUCKET_DEPLOYMENT_ENVIRONMENT* $DEPLOYMENT_FEEDBACK\nBuild Number: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER|#$BITBUCKET_BUILD_NUMBER>*\n$VERSION_INFO\n$CHANGELOG_PAYLOAD'
+                        'text': 'Deployment of service *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/branch/$BITBUCKET_BRANCH|$BITBUCKET_REPO_SLUG>* on *$BITBUCKET_DEPLOYMENT_ENVIRONMENT* $DEPLOYMENT_FEEDBACK\nBuild Number: *<https://bitbucket.org/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER|#$BITBUCKET_BUILD_NUMBER>*\n$VERSION_INFO\n$CHANGELOG_PAYLOAD'
                       },
                       $ICON_DEPLOYMENT_FEEDBACK
                     },
@@ -87,7 +87,7 @@ notify_slack() {
                       'elements': [
                         {
                           'type': 'mrkdwn',
-                          'text': '*><https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe|smart-slack-notification 1.1.0>*'
+                          'text': '*><https://hub.docker.com/repository/docker/raphacps/smart-slack-notification-pipe|smart-slack-notification 1.1.1>*'
                         }
                       ]
                     }

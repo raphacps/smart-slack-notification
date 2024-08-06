@@ -33,7 +33,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.1
     variables:
       TEAM_NAME: "<string>"
       PROJECT_NAME: "<string>"
@@ -48,7 +48,7 @@ script:
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.1
     variables:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
@@ -60,7 +60,7 @@ script:
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.1
     variables:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
@@ -72,7 +72,7 @@ script:
 
 ```yaml
 script:
-  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.0
+  - pipe: docker://raphacps/smart-slack-notification-pipe:1.1.1
     variables:
       TEAM_NAME: "My Project"
       PROJECT_NAME: "My Awesome Team"
