@@ -1,12 +1,11 @@
-version: "3.3"
 services:
   slackNotification:
-    image: raphacps/smart-slack-notification-pipe:1.1.0
+    image: raphacps/smart-slack-notification-pipe:1.1.1
     build: .
     environment:
       PROJECT_NAME: My Awesome Project
       TEAM_NAME: My Awesome Team
-      SLACK_HOOK_URL: "https://hooks.slack.com/services/999999999/999999999/aaaaaaaaaaaaaaaaaaa"
+      SLACK_HOOK_URL: "https://hooks.slack.com/services/AAAAAAAAA/BBBBBBBBBBBBB/XuihifdeHIhifduihIH"
       VERSION: 1.0.0
       CHANGELOG: "true"
       BITBUCKET_EXIT_CODE: 0
